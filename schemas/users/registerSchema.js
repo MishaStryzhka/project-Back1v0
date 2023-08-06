@@ -4,6 +4,7 @@ const registerSchema = Joi.object({
   name: Joi.string().required(),
   email: Joi.string().required(),
   password: Joi.string().required(),
+  type: Joi.string().valid('patient', 'doctor').required(),
 });
 
 module.exports = registerSchema;

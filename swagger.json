@@ -5,6 +5,468 @@
     "title": "Swagger - Pets Shop",
     "description": "Showing off swagger-ui-express"
   },
-  "consumes": ["application/json"],
-  "produces": ["application/json"]
+  "consumes": ["application/json", "multipart/form-data"],
+  "produces": ["application/json"],
+  "servers": [
+    {
+      "url": "https://project-back1v0.onrender.com/"
+    },
+    {
+      "url": " http://localhost:4000"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authorization endpoint"
+    }
+  ],
+  "paths": {
+    "/api/users/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User registration",
+
+        "parameters": [],
+
+        "requestBody": {
+          "description": "Registration object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequest"
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bade request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/api/users/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User login",
+
+        "parameters": [],
+
+        "requestBody": {
+          "description": "Login object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Email or password is wrong",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/api/users/logout": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User logout",
+
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+
+        "requestBody": {
+          "description": "Logout object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LogoutRequest"
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "204": {
+            "description": "Successful operation"
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/api/users/current": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Get Current User",
+
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetCurrentUserResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/api/users/current/update": {
+      "patch": {
+        "tags": ["Auth"],
+        "summary": "Update Current User",
+
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+
+        "requestBody": {
+          "description": "Update object",
+          "required": false,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCurrentUserRequest",
+                "type": "object"
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateCurrentUserResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bade request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+
+  "components": {
+    "schemas": {
+      "RegistrationRequest": {
+        "type": "object",
+        "required": ["name", "email", "password", "type"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User`s Name",
+            "example": "Test Name"
+          },
+          "email": {
+            "type": "string",
+            "description": "User`s Email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User`s password",
+            "example": "qwerty123"
+          },
+          "type": {
+            "type": "string",
+            "description": "User`s type [patient, doctor]",
+            "example": "patient"
+          }
+        }
+      },
+      "RegistrationResponse": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User`s Name",
+            "example": "Test Name"
+          },
+          "email": {
+            "type": "string",
+            "description": "User`s Email",
+            "format": "email"
+          },
+          "type": {
+            "type": "string",
+            "description": "User`s type: patient or doctor",
+            "example": "patient"
+          },
+          "token": {
+            "type": "string",
+            "description": "JWT"
+          },
+          "firstLogin": {
+            "type": "boolean",
+            "description": "Is that first user login?"
+          }
+        }
+      },
+
+      "LoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User`s Email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User`s password",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "JWT"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "User`s Name"
+              },
+              "birthday": {
+                "type": "string",
+                "description": "User`s Birthday"
+              },
+              "phone": {
+                "type": "string",
+                "description": "User`s Phone"
+              },
+              "city": {
+                "type": "string",
+                "description": "User`s City"
+              },
+              "email": {
+                "type": "string",
+                "description": "User`s Email",
+                "format": "email"
+              },
+              "firstLogin": {
+                "type": "boolean",
+                "description": "Is that first user login?"
+              },
+              "avatar": {
+                "type": "string",
+                "description": "Link to User Avatar"
+              },
+              "favorite": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "Array of favorite card`s ID"
+                }
+              }
+            }
+          }
+        }
+      },
+
+      "LogoutRequest": {
+        "type": "object",
+        "required": ["token"],
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "JWT"
+          }
+        }
+      },
+
+      "GetCurrentUserResponse": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User`s Name"
+          },
+          "birthday": {
+            "type": "string",
+            "description": "User`s Birthday"
+          },
+          "phone": {
+            "type": "string",
+            "description": "User`s Phone"
+          },
+          "city": {
+            "type": "string",
+            "description": "User`s City"
+          },
+          "email": {
+            "type": "string",
+            "description": "User`s Email",
+            "format": "email"
+          },
+          "firstLogin": {
+            "type": "boolean",
+            "description": "Is that first user login?"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "Link to User Avatar"
+          },
+          "favorite": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "Array of favorite card`s ID"
+            }
+          }
+        }
+      },
+
+      "UpdateCurrentUserRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User`s Name"
+          },
+          "email": {
+            "type": "string",
+            "description": "User`s Email",
+            "format": "email"
+          },
+          "birthday": {
+            "type": "string",
+            "description": "User`s Birthday"
+          },
+          "phone": {
+            "type": "string",
+            "description": "User`s Phone"
+          },
+          "city": {
+            "type": "string",
+            "description": "User`s City"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "User`s Avatar",
+            "format": "binary"
+          }
+        }
+      },
+      "UpdateCurrentUserResponse": {
+        "type": "object",
+        "properties": {
+          "User": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "User`s Name"
+              },
+              "email": {
+                "type": "string",
+                "description": "User`s Email",
+                "format": "email"
+              },
+              "birthday": {
+                "type": "string",
+                "description": "User`s Email",
+                "format": "email"
+              },
+              "phone": {
+                "type": "string",
+                "description": "User`s Email",
+                "format": "email"
+              },
+              "city": {
+                "type": "string",
+                "description": "User`s Email",
+                "format": "email"
+              },
+              "avatar": {
+                "type": "string",
+                "description": "Link to user avatar"
+              },
+              "favorite": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "Array of favorite card`s ID"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
 }

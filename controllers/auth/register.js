@@ -6,11 +6,16 @@ const jwt = require('jsonwebtoken');
 const { SECRET_KEY } = process.env;
 
 const register = async (req, res) => {
+  console.log(req.body);
   const { email, password } = req.body;
   const user = await User.findOne({ email });
 
   if (user) {
     throw HttpError(409, 'Email in use');
+  }
+
+  if (user) {
+    throw HttpError(409, 'TESTs');
   }
 
   const hashPassword = await bcrypt.hash(password, 10);
@@ -39,6 +44,7 @@ const register = async (req, res) => {
       email: registeredUser.email,
       token,
       firstLogin: registeredUser.isFirstLogin,
+      type: registeredUser.type,
     },
   });
 };

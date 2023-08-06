@@ -20,6 +20,11 @@ const userSchema = new Schema(
       unique: true,
       required: [true, 'Email is required'],
     },
+    type: {
+      type: String,
+      enum: ['patient', 'doctor'],
+      required: [true, 'Set User type: patient or doctor'],
+    },
     birthday: {
       type: String,
       require: false,
