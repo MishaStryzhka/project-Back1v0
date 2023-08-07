@@ -44,7 +44,7 @@ const register = async (req, res) => {
       email: registeredUser.email,
       token,
       firstLogin: registeredUser.isFirstLogin,
-      type: registeredUser.type,
+      userType: registeredUser.userType,
     },
   });
 };

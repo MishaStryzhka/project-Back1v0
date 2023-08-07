@@ -20,28 +20,14 @@ const userSchema = new Schema(
       unique: true,
       required: [true, 'Email is required'],
     },
-    type: {
+    userType: {
       type: String,
       enum: ['patient', 'doctor'],
       required: [true, 'Set User type: patient or doctor'],
     },
-    birthday: {
+    token: {
       type: String,
-      require: false,
     },
-    phone: {
-      type: String,
-      require: false,
-    },
-    city: {
-      type: String,
-      require: false,
-    },
-    avatar: {
-      type: String,
-      required: false,
-    },
-    token: String,
     isFirstLogin: {
       type: Boolean,
       required: true,

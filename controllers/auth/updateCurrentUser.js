@@ -5,6 +5,8 @@ const updateCurrentUser = async (req, res, next) => {
   const { _id } = req.user;
   const { name, email, birthday, phone, city } = req.body;
 
+  console.log(req.body);
+
   const user = await User.findById(_id);
   if (!user) {
     next(HttpError(401, 'Not authorized'));
@@ -22,10 +24,11 @@ const updateCurrentUser = async (req, res, next) => {
       {
         name,
         email,
-        birthday,
-        phone,
-        city,
-        avatar: req.file.originalname,
+
+        // birthday,
+        // phone,
+        // city,
+        // avatar: req.file.originalname,
       },
       {
         new: true,
@@ -33,13 +36,16 @@ const updateCurrentUser = async (req, res, next) => {
     );
 
     res.status(200).json({
-      User: {
+      user: {
         name: updatedUser.name,
         email: updatedUser.email,
-        birthday: updatedUser.birthday,
-        phone: updatedUser.phone,
-        city: updatedUser.city,
-        avatar: updatedUser.avatarURL,
+        userType: updatedUser.userType,
+        userID: updatedUser._id,
+
+        // birthday: updatedUser.birthday,
+        // phone: updatedUser.phone,
+        // city: updatedUser.city,
+        // avatar: updatedUser.avatarURL,
       },
     });
   } else {
@@ -48,9 +54,9 @@ const updateCurrentUser = async (req, res, next) => {
       {
         name,
         email,
-        birthday,
-        phone,
-        city,
+        // birthday,
+        // phone,
+        // city,
       },
       {
         new: true,
@@ -58,13 +64,15 @@ const updateCurrentUser = async (req, res, next) => {
     );
 
     res.status(200).json({
-      User: {
+      user: {
         name: updatedUser.name,
         email: updatedUser.email,
-        birthday: updatedUser.birthday,
-        phone: updatedUser.phone,
-        city: updatedUser.city,
-        avatar: updatedUser.avatarURL,
+        userType: updatedUser.userType,
+        userID: updatedUser._id,
+        // birthday: updatedUser.birthday,
+        // phone: updatedUser.phone,
+        // city: updatedUser.city,
+        // avatar: updatedUser.avatarURL,
       },
     });
   }

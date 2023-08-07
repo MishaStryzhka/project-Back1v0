@@ -28,15 +28,12 @@ const login = async (req, res) => {
   req.user = user;
 
   res.status(201).json({
-    token: token,
     user: {
       name: user.name,
       email: user.email,
-      birthday: user.birthday,
-      phone: user.phone,
-      city: user.city,
-      avatar: user.avatarURL,
+      userType: user.userType,
       isFirstLogin: !user.isFirstLogin,
+      token: token,
     },
   });
 };

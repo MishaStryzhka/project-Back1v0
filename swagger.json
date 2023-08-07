@@ -2,7 +2,7 @@
   "openapi": "3.0.1",
   "info": {
     "version": "1.0.0",
-    "title": "Swagger - Pets Shop",
+    "title": "Swagger - Medical Play Market",
     "description": "Showing off swagger-ui-express"
   },
   "consumes": ["application/json", "multipart/form-data"],
@@ -110,18 +110,6 @@
         "parameters": [],
         "security": [{ "Bearer": [] }],
 
-        "requestBody": {
-          "description": "Logout object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LogoutRequest"
-              }
-            }
-          }
-        },
-
         "responses": {
           "204": {
             "description": "Successful operation"
@@ -210,7 +198,7 @@
     "schemas": {
       "RegistrationRequest": {
         "type": "object",
-        "required": ["name", "email", "password", "type"],
+        "required": ["name", "email", "password", "userType"],
         "properties": {
           "name": {
             "type": "string",
@@ -227,7 +215,7 @@
             "description": "User`s password",
             "example": "qwerty123"
           },
-          "type": {
+          "userType": {
             "type": "string",
             "description": "User`s type [patient, doctor]",
             "example": "patient"
@@ -237,28 +225,33 @@
       "RegistrationResponse": {
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string",
-            "description": "User`s Name",
-            "example": "Test Name"
-          },
-          "email": {
-            "type": "string",
-            "description": "User`s Email",
-            "format": "email"
-          },
-          "type": {
-            "type": "string",
-            "description": "User`s type: patient or doctor",
-            "example": "patient"
-          },
-          "token": {
-            "type": "string",
-            "description": "JWT"
-          },
-          "firstLogin": {
-            "type": "boolean",
-            "description": "Is that first user login?"
+          "user": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "User`s Name",
+                "example": "Test Name"
+              },
+              "email": {
+                "type": "string",
+                "description": "User`s Email",
+                "format": "email"
+              },
+              "userType": {
+                "type": "string",
+                "description": "User`s type: patient or doctor",
+                "example": "patient"
+              },
+              "firstLogin": {
+                "type": "boolean",
+                "description": "Is that first user login?"
+              },
+              "token": {
+                "type": "string",
+                "description": "JWT"
+              }
+            }
           }
         }
       },
@@ -282,10 +275,6 @@
       "LoginResponse": {
         "type": "object",
         "properties": {
-          "token": {
-            "type": "string",
-            "description": "JWT"
-          },
           "user": {
             "type": "object",
             "properties": {
@@ -293,50 +282,26 @@
                 "type": "string",
                 "description": "User`s Name"
               },
-              "birthday": {
-                "type": "string",
-                "description": "User`s Birthday"
-              },
-              "phone": {
-                "type": "string",
-                "description": "User`s Phone"
-              },
-              "city": {
-                "type": "string",
-                "description": "User`s City"
-              },
               "email": {
                 "type": "string",
                 "description": "User`s Email",
                 "format": "email"
               },
+              "userType": {
+                "type": "string",
+                "description": "User`s type: patient or doctor",
+                "example": "patient"
+              },
+
               "firstLogin": {
                 "type": "boolean",
                 "description": "Is that first user login?"
               },
-              "avatar": {
+              "token": {
                 "type": "string",
-                "description": "Link to User Avatar"
-              },
-              "favorite": {
-                "type": "array",
-                "items": {
-                  "type": "string",
-                  "description": "Array of favorite card`s ID"
-                }
+                "description": "JWT"
               }
             }
-          }
-        }
-      },
-
-      "LogoutRequest": {
-        "type": "object",
-        "required": ["token"],
-        "properties": {
-          "token": {
-            "type": "string",
-            "description": "JWT"
           }
         }
       },
@@ -344,40 +309,22 @@
       "GetCurrentUserResponse": {
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string",
-            "description": "User`s Name"
-          },
-          "birthday": {
-            "type": "string",
-            "description": "User`s Birthday"
-          },
-          "phone": {
-            "type": "string",
-            "description": "User`s Phone"
-          },
-          "city": {
-            "type": "string",
-            "description": "User`s City"
-          },
-          "email": {
-            "type": "string",
-            "description": "User`s Email",
-            "format": "email"
-          },
-          "firstLogin": {
-            "type": "boolean",
-            "description": "Is that first user login?"
-          },
-          "avatar": {
-            "type": "string",
-            "description": "Link to User Avatar"
-          },
-          "favorite": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "description": "Array of favorite card`s ID"
+          "user": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "User`s Name"
+              },
+              "email": {
+                "type": "string",
+                "description": "User`s Email"
+              },
+              "userType": {
+                "type": "string",
+                "description": "User`s type: patient or doctor",
+                "example": "patient"
+              }
             }
           }
         }
@@ -394,30 +341,13 @@
             "type": "string",
             "description": "User`s Email",
             "format": "email"
-          },
-          "birthday": {
-            "type": "string",
-            "description": "User`s Birthday"
-          },
-          "phone": {
-            "type": "string",
-            "description": "User`s Phone"
-          },
-          "city": {
-            "type": "string",
-            "description": "User`s City"
-          },
-          "avatar": {
-            "type": "string",
-            "description": "User`s Avatar",
-            "format": "binary"
           }
         }
       },
       "UpdateCurrentUserResponse": {
         "type": "object",
         "properties": {
-          "User": {
+          "user": {
             "type": "object",
             "properties": {
               "name": {
@@ -429,31 +359,14 @@
                 "description": "User`s Email",
                 "format": "email"
               },
-              "birthday": {
+              "userType": {
                 "type": "string",
-                "description": "User`s Email",
-                "format": "email"
+                "description": "User`s type: patient or doctor",
+                "example": "patient"
               },
-              "phone": {
+              "userID": {
                 "type": "string",
-                "description": "User`s Email",
-                "format": "email"
-              },
-              "city": {
-                "type": "string",
-                "description": "User`s Email",
-                "format": "email"
-              },
-              "avatar": {
-                "type": "string",
-                "description": "Link to user avatar"
-              },
-              "favorite": {
-                "type": "array",
-                "items": {
-                  "type": "string",
-                  "description": "Array of favorite card`s ID"
-                }
+                "description": "User`s ID"
               }
             }
           }
