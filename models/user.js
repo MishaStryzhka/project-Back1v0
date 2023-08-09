@@ -23,14 +23,9 @@ const userSchema = new Schema(
     userType: {
       type: String,
       enum: ['patient', 'doctor'],
-      required: [true, 'Set User type: patient or doctor'],
     },
     token: {
       type: String,
-    },
-    isFirstLogin: {
-      type: Boolean,
-      required: true,
     },
   },
   { versionKey: false }
