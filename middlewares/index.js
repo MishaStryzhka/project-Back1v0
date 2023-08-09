@@ -4,6 +4,7 @@ const uploadUserAvatar = require('./uploadUserAvatar');
 const validateQuery = require('./validateQuery');
 const validateId = require('./validateId');
 const uploadCloud = require('./uploadCloud');
+const passport = require('./google-authenticate');
 
 module.exports = {
   validateBody,
@@ -12,4 +13,5 @@ module.exports = {
   validateQuery,
   validateId,
   uploadCloud,
+  passport,
 };

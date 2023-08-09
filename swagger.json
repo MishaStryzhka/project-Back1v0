@@ -9,7 +9,7 @@
   "produces": ["application/json"],
   "servers": [
     {
-      "url": "https://project-back1v0.onrender.com/"
+      "url": "https://project-back1v0.onrender.com"
     },
     {
       "url": " http://localhost:4000"
