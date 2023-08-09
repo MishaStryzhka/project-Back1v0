@@ -2,9 +2,384 @@
   "openapi": "3.0.1",
   "info": {
     "version": "1.0.0",
-    "title": "Swagger - Pets Shop",
+    "title": "Swagger - Medical Play Market",
     "description": "Showing off swagger-ui-express"
   },
-  "consumes": ["application/json"],
-  "produces": ["application/json"]
+  "consumes": ["application/json", "multipart/form-data"],
+  "produces": ["application/json"],
+  "servers": [
+    {
+      "url": "https://project-back1v0.onrender.com/"
+    },
+    {
+      "url": " http://localhost:4000"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authorization endpoint"
+    }
+  ],
+  "paths": {
+    "/api/users/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User registration",
+
+        "parameters": [],
+
+        "requestBody": {
+          "description": "Registration object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequest"
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bade request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/api/users/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User login",
+
+        "parameters": [],
+
+        "requestBody": {
+          "description": "Login object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Email or password is wrong",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/api/users/logout": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User logout",
+
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+
+        "responses": {
+          "204": {
+            "description": "Successful operation"
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/api/users/current": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Get Current User",
+
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetCurrentUserResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/api/users/current/update": {
+      "patch": {
+        "tags": ["Auth"],
+        "summary": "Update Current User",
+
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+
+        "requestBody": {
+          "description": "Update object",
+          "required": false,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCurrentUserRequest",
+                "type": "object"
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateCurrentUserResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bade request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+
+  "components": {
+    "schemas": {
+      "RegistrationRequest": {
+        "type": "object",
+        "required": ["name", "email", "password", "userType"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User`s Name",
+            "example": "Test Name"
+          },
+          "email": {
+            "type": "string",
+            "description": "User`s Email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User`s password",
+            "example": "qwerty123"
+          },
+          "userType": {
+            "type": "string",
+            "description": "User`s type [patient, doctor]",
+            "example": "patient"
+          }
+        }
+      },
+      "RegistrationResponse": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "User`s Name",
+                "example": "Test Name"
+              },
+              "email": {
+                "type": "string",
+                "description": "User`s Email",
+                "format": "email"
+              },
+              "userType": {
+                "type": "string",
+                "description": "User`s type: patient or doctor",
+                "example": "patient"
+              },
+              "firstLogin": {
+                "type": "boolean",
+                "description": "Is that first user login?"
+              },
+              "token": {
+                "type": "string",
+                "description": "JWT"
+              }
+            }
+          }
+        }
+      },
+
+      "LoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User`s Email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User`s password",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "User`s Name"
+              },
+              "email": {
+                "type": "string",
+                "description": "User`s Email",
+                "format": "email"
+              },
+              "userType": {
+                "type": "string",
+                "description": "User`s type: patient or doctor",
+                "example": "patient"
+              },
+
+              "firstLogin": {
+                "type": "boolean",
+                "description": "Is that first user login?"
+              },
+              "token": {
+                "type": "string",
+                "description": "JWT"
+              }
+            }
+          }
+        }
+      },
+
+      "GetCurrentUserResponse": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "User`s Name"
+              },
+              "email": {
+                "type": "string",
+                "description": "User`s Email"
+              },
+              "userType": {
+                "type": "string",
+                "description": "User`s type: patient or doctor",
+                "example": "patient"
+              }
+            }
+          }
+        }
+      },
+
+      "UpdateCurrentUserRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User`s Name"
+          },
+          "email": {
+            "type": "string",
+            "description": "User`s Email",
+            "format": "email"
+          }
+        }
+      },
+      "UpdateCurrentUserResponse": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "User`s Name"
+              },
+              "email": {
+                "type": "string",
+                "description": "User`s Email",
+                "format": "email"
+              },
+              "userType": {
+                "type": "string",
+                "description": "User`s type: patient or doctor",
+                "example": "patient"
+              },
+              "userID": {
+                "type": "string",
+                "description": "User`s ID"
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
 }

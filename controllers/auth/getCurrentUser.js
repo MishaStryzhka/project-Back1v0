@@ -7,12 +7,11 @@ const getCurrentUser = async (req, res, next) => {
     next(HttpError(401, 'Not authorized'));
   }
   res.status(200).json({
-    name: user.name,
-    email: user.email,
-    birthday: user.birthday,
-    phone: user.phone,
-    city: user.city,
-    avatar: user.avatarURL,
+    user: {
+      name: user.name,
+      email: user.email,
+      userType: user.userType,
+    },
   });
 };
 
