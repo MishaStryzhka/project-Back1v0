@@ -214,11 +214,6 @@
             "type": "string",
             "description": "User`s password",
             "example": "qwerty123"
-          },
-          "userType": {
-            "type": "string",
-            "description": "User`s type [patient, doctor]",
-            "example": "patient"
           }
         }
       },
@@ -237,11 +232,6 @@
                 "type": "string",
                 "description": "User`s Email",
                 "format": "email"
-              },
-              "userType": {
-                "type": "string",
-                "description": "User`s type: patient or doctor",
-                "example": "patient"
               },
               "firstLogin": {
                 "type": "boolean",

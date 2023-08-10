@@ -26,7 +26,7 @@ const googleCallback = async (
     const user = await User.findOne({ email });
 
     if (user) {
-      done(null, user); // req.user = user
+      return done(null, user); // req.user = user
     }
 
     const password = await bcrypt.hash(nanoid(), 10);
@@ -34,6 +34,7 @@ const googleCallback = async (
       email,
       password,
       name: displayName,
+      firstLogin: true,
     });
     done(null, newUser);
   } catch (error) {
