@@ -12,7 +12,7 @@ const googleParams = {
   clientID: GOOGLE_CLIENT_ID,
   clientSecret: GOOGLE_CLIENT_SECRET,
   callbackURL: `${BASE_ONRENDER_URL}/api/users/google/callback`,
-  // callbackURL: `${BASE_URL}/api/users/google/callback`,
+
   passReqToCallback: true,
 };
 
