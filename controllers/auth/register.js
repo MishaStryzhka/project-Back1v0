@@ -40,11 +40,9 @@ const register = async (req, res) => {
 
   res.status(201).json({
     user: {
-      name: registeredUser.name,
       email: registeredUser.email,
       token,
       firstLogin: registeredUser.isFirstLogin,
-      userType: registeredUser.userType,
     },
   });
 };
