@@ -36,13 +36,13 @@ const register = async (req, res) => {
 
   await User.findByIdAndUpdate(registeredUser._id, { token });
   req.user = registeredUser;
-  console.log(registeredUser);
 
   res.status(201).json({
     user: {
       email: registeredUser.email,
       token,
       firstLogin: registeredUser.isFirstLogin,
+      userType: registeredUser.userType,
     },
   });
 };
