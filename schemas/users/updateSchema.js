@@ -1,7 +1,7 @@
 const Joi = require('joi');
 
 const updateSchema = Joi.object({
-  name: Joi.string().min(3),
+  firstName: Joi.string().min(3),
   email: Joi.string(),
 });
 

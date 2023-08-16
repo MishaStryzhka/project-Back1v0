@@ -14,16 +14,12 @@ const register = async (req, res) => {
     throw HttpError(409, 'Email in use');
   }
 
-  if (user) {
-    throw HttpError(409, 'TESTs');
-  }
-
   const hashPassword = await bcrypt.hash(password, 10);
 
   await User.create({
     ...req.body,
     password: hashPassword,
-    isFirstLogin: true,
+    // isFirstLogin: true,
   });
 
   const registeredUser = await User.findOne({ email });
@@ -41,8 +37,9 @@ const register = async (req, res) => {
     user: {
       email: registeredUser.email,
       token,
-      firstLogin: registeredUser.isFirstLogin,
+      // firstLogin: registeredUser.isFirstLogin,
       userType: registeredUser.userType,
+      userID: registeredUser.id,
     },
   });
 };

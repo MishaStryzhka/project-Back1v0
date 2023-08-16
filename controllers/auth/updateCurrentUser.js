@@ -3,13 +3,24 @@ const { User } = require('../../models');
 
 const updateCurrentUser = async (req, res, next) => {
   const { _id } = req.user;
-  const { name, email, birthday, phone, city } = req.body;
-
-  console.log(req.body);
+  const { email, firstName, lastName, patronymic, phones, userType } = req.body;
 
   const user = await User.findById(_id);
   if (!user) {
     next(HttpError(401, 'Not authorized'));
+  }
+
+  let phonesArr = [];
+  if (phones) {
+    phonesArr = phones.substring(1, phones.length - 1).split(',');
+    let indexPhoneInUse = '';
+    const isPhoneExist = phonesArr.some((phone) => {
+      indexPhoneInUse = user.phones.indexOf(phone);
+      return user.phones.indexOf(phone) >= 0;
+    });
+    if (isPhoneExist) {
+      throw HttpError(409, `Phone ${user.phones[indexPhoneInUse]} in use`);
+    }
   }
 
   const isNewEmailExist = await User.findOne({ email });
@@ -22,14 +33,15 @@ const updateCurrentUser = async (req, res, next) => {
     const updatedUser = await User.findByIdAndUpdate(
       _id,
       {
-        name,
         email,
-
-        // birthday,
-        // phone,
-        // city,
+        firstName,
+        lastName,
+        patronymic,
+        $push: { phones: { $each: phonesArr } },
+        userType,
         // avatar: req.file.originalname,
       },
+
       {
         new: true,
       }
@@ -37,14 +49,13 @@ const updateCurrentUser = async (req, res, next) => {
 
     res.status(200).json({
       user: {
-        name: updatedUser.name,
         email: updatedUser.email,
+        firstName: updatedUser.firstName,
+        lastName: updatedUser.lastName,
+        patronymic: updatedUser.patronymic,
+        phones: updatedUser.phones,
         userType: updatedUser.userType,
         userID: updatedUser._id,
-
-        // birthday: updatedUser.birthday,
-        // phone: updatedUser.phone,
-        // city: updatedUser.city,
         // avatar: updatedUser.avatarURL,
       },
     });
@@ -52,12 +63,14 @@ const updateCurrentUser = async (req, res, next) => {
     const updatedUser = await User.findByIdAndUpdate(
       _id,
       {
-        name,
         email,
-        // birthday,
-        // phone,
-        // city,
+        firstName,
+        lastName,
+        patronymic,
+        $push: { phones: { $each: phonesArr } },
+        userType,
       },
+
       {
         new: true,
       }
@@ -65,14 +78,13 @@ const updateCurrentUser = async (req, res, next) => {
 
     res.status(200).json({
       user: {
-        name: updatedUser.name,
         email: updatedUser.email,
+        firstName: updatedUser.firstName,
+        lastName: updatedUser.lastName,
+        patronymic: updatedUser.patronymic,
+        phones: updatedUser.phones,
         userType: updatedUser.userType,
         userID: updatedUser._id,
-        // birthday: updatedUser.birthday,
-        // phone: updatedUser.phone,
-        // city: updatedUser.city,
-        // avatar: updatedUser.avatarURL,
       },
     });
   }
