@@ -47,4 +47,6 @@ router.patch(
   ctrl.updateUserType
 );
 
+router.delete('/current', authenticate, ctrl.deleteById);
+
 module.exports = router;

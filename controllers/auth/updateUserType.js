@@ -1,11 +1,11 @@
 const { HttpError } = require('../../helpers');
 const { User } = require('../../models');
 
-const updateUserType = async (req, res, next) => {
+const updateUserType = async (req, res) => {
   const user = await User.findById(req.user._id);
 
   if (!user) {
-    next(HttpError(401, 'Not authorized'));
+    throw HttpError(401, 'Not authorized');
   }
 
   const updatedUser = await User.findByIdAndUpdate(user._id, req.body, {
