@@ -36,7 +36,6 @@ const googleCallback = async (
       email,
       password,
       name: displayName,
-      firstLogin: true,
     });
     done(null, newUser);
   } catch (error) {
