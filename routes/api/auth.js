@@ -11,6 +11,7 @@ const {
   registerSchema,
   loginSchema,
   updateSchema,
+  updateUserTypeSchema,
 } = require('../../schemas/users');
 
 const router = express.Router();
@@ -38,6 +39,12 @@ router.put(
   validateBody(updateSchema),
   uploadUserAvatar.single('avatar'),
   ctrl.updateCurrentUser
+);
+router.patch(
+  '/current/userType',
+  authenticate,
+  validateBody(updateUserTypeSchema),
+  ctrl.updateUserType
 );
 
 module.exports = router;

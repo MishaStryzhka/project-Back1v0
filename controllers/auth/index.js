@@ -5,6 +5,7 @@ const logout = require('./logout');
 const getCurrentUser = require('./getCurrentUser');
 const updateCurrentUser = require('./updateCurrentUser');
 const googleAuth = require('./googleAuth');
+const updateUserType = require('./updateUserType');
 
 module.exports = {
   register: ctrlWrapper(register),
@@ -13,4 +14,5 @@ module.exports = {
   getCurrentUser: ctrlWrapper(getCurrentUser),
   updateCurrentUser: ctrlWrapper(updateCurrentUser),
   googleAuth: ctrlWrapper(googleAuth),
+  updateUserType: ctrlWrapper(updateUserType),
 };
