@@ -29,7 +29,7 @@ const storage = new CloudinaryStorage({
     }
     return {
       folder: folder,
-      allowed_formats: ['jpg', 'jpeg', 'png', 'pdf'], // Adjust the allowed formats as needed
+      allowed_formats: ['jpg', 'jpeg', 'png'], // Adjust the allowed formats as needed
       public_id: uniqueImgName, // Use original filename as the public ID
       // transformation: [
       //   { width: 350, height: 350 },

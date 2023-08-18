@@ -359,3 +359,9 @@ PUT /api/users/current/update 18-08-2023_04:53:17
 PUT /api/users/current/update 18-08-2023_04:53:51
 PUT /api/users/current/update 18-08-2023_04:55:13
 PUT /api/users/current/update 18-08-2023_04:56:01
+PUT /api/users/current/update 18-08-2023_05:09:08
+PUT /api/users/current/update 18-08-2023_05:11:29
+PUT /api/users/current/update 18-08-2023_05:12:17
+PUT /api/users/current/update 18-08-2023_05:14:38
+PUT /api/users/current/update 18-08-2023_05:15:37
+DELETE /api/users/current 18-08-2023_05:16:40

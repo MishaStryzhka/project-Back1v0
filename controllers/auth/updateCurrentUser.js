@@ -11,6 +11,7 @@ const updateCurrentUser = async (req, res, next) => {
   }
 
   console.log(req.file);
+  console.log(req.body);
   // -> Check if new phone number already exist
 
   if (phones) {
@@ -38,7 +39,7 @@ const updateCurrentUser = async (req, res, next) => {
 
   const updatedUser = await User.findByIdAndUpdate(
     _id,
-    { avatar: req.file.path, ...req.body },
+    { avatar: req.file.path, avatarPublicId: req.file.filename, ...req.body },
     {
       new: true,
     }

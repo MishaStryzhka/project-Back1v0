@@ -41,6 +41,7 @@ const userSchema = new Schema(
       default: 'Dentist Portal',
     },
     avatar: String,
+    avatarPublicId: String,
     token: {
       type: String,
     },
