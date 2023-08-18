@@ -5,13 +5,14 @@ const { nanoid } = require('nanoid');
 
 const { User } = require('../models/index');
 
-const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, BASE_URL } = process.env;
+const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, BASE_URL, BASE_ONRENDER_URL } =
+  process.env;
 
 // ********** Google Authenticate ****************** //
 const googleParams = {
   clientID: GOOGLE_CLIENT_ID,
   clientSecret: GOOGLE_CLIENT_SECRET,
-  callbackURL: `${BASE_URL}/api/users/google/callback`,
+  callbackURL: `${BASE_ONRENDER_URL}/api/users/google/callback`,
 
   passReqToCallback: true,
 };
