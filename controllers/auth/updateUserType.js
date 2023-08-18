@@ -16,6 +16,11 @@ const updateUserType = async (req, res) => {
     user: {
       userID: updatedUser.id,
       userType: updatedUser.userType,
+      email: updatedUser.email,
+      firstName: updatedUser.firstName,
+      lastName: updatedUser.lastName,
+      patronymic: updatedUser.patronymic,
+      avatar: updatedUser.avatar,
     },
   });
 };
