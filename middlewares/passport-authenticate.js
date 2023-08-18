@@ -5,7 +5,7 @@ const { nanoid } = require('nanoid');
 
 const { User } = require('../models/index');
 
-const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, BASE_ONRENDER_URL } =
+const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, BASE_URL, BASE_ONRENDER_URL } =
   process.env;
 
 // ********** Google Authenticate ****************** //
