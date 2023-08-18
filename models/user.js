@@ -35,6 +35,8 @@ const userSchema = new Schema(
       type: String,
       enum: ['patient', 'doctor'],
     },
+    contactMethods: [String],
+    avatar: String,
     token: {
       type: String,
     },

@@ -29,6 +29,14 @@ router.get(
   ctrl.googleAuth
 );
 
+router.get('/facebook', passport.authenticate('facebook', { scope: 'email' }));
+
+router.get(
+  '/facebook/callback',
+  passport.authenticate('facebook', { session: false }),
+  ctrl.facebookAuth
+);
+
 router.post('/register', validateBody(registerSchema), ctrl.register);
 router.post('/login', validateBody(loginSchema), ctrl.login);
 router.post('/logout', authenticate, ctrl.logout);

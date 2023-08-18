@@ -4,9 +4,11 @@ const login = require('./login');
 const logout = require('./logout');
 const getCurrentUser = require('./getCurrentUser');
 const updateCurrentUser = require('./updateCurrentUser');
-const googleAuth = require('./googleAuth');
 const updateUserType = require('./updateUserType');
 const deleteById = require('./deleteById');
+
+const googleAuth = require('./googleAuth');
+const facebookAuth = require('./facebookAuth');
 
 module.exports = {
   register: ctrlWrapper(register),
@@ -17,4 +19,5 @@ module.exports = {
   googleAuth: ctrlWrapper(googleAuth),
   updateUserType: ctrlWrapper(updateUserType),
   deleteById: ctrlWrapper(deleteById),
+  facebookAuth: ctrlWrapper(facebookAuth),
 };
