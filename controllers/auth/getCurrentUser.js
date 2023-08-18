@@ -17,6 +17,7 @@ const getCurrentUser = async (req, res, next) => {
       lastName: user.lastName,
       patronymic: user.patronymic,
       avatar: user.avatar,
+      provider: user.provider,
     },
   });
 };
