@@ -26,11 +26,15 @@ const updateCurrentUser = async (req, res, next) => {
     req.body.phones = phonesArr;
   }
 
-  const isNewEmailExist = await User.findOne({ email });
-
-  if (isNewEmailExist) {
-    throw HttpError(409, 'Email in use');
+  if (email) {
+    throw HttpError(404, 'Not found');
   }
+
+  // const isNewEmailExist = await User.findOne({ email });
+
+  // if (isNewEmailExist) {
+  //   throw HttpError(409, 'Email in use');
+  // }
 
   const updatedUser = await User.findByIdAndUpdate(_id, req.body, {
     new: true,
@@ -45,7 +49,7 @@ const updateCurrentUser = async (req, res, next) => {
       phones: updatedUser.phones,
       userType: updatedUser.userType,
       userID: updatedUser._id,
-      avatar: updatedUser.avatarURL,
+      avatar: updatedUser.avatar,
     },
   });
 };
