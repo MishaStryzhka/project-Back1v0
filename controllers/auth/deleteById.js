@@ -1,8 +1,14 @@
 const { HttpError } = require('../../helpers');
 const { User } = require('../../models');
+const cloudinary = require('cloudinary');
 
 const deleteById = async (req, res) => {
-  const { id } = req.user;
+  const { id, avatarPublicId } = req.user;
+
+  // -> Delete img on Cloudinary
+  await cloudinary.uploader.destroy(avatarPublicId);
+
+  // -> Delete user from DB collection
   const result = await User.findByIdAndRemove(id);
 
   if (!result) {
