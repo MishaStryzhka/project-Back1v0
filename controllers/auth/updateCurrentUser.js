@@ -10,6 +10,7 @@ const updateCurrentUser = async (req, res, next) => {
     next(HttpError(401, 'Not authorized'));
   }
 
+  console.log(req.file);
   // -> Check if new phone number already exist
 
   if (phones) {
@@ -22,7 +23,6 @@ const updateCurrentUser = async (req, res, next) => {
     if (isPhoneExist) {
       throw HttpError(409, `Phone ${user.phones[indexPhoneInUse]} in use`);
     }
-    console.log(req.body);
     req.body.phones = phonesArr;
   }
 
@@ -30,25 +30,29 @@ const updateCurrentUser = async (req, res, next) => {
     throw HttpError(404, 'Not found');
   }
 
-  // const isNewEmailExist = await User.findOne({ email });
+  const isNewEmailExist = await User.findOne({ email });
 
-  // if (isNewEmailExist) {
-  //   throw HttpError(409, 'Email in use');
-  // }
+  if (isNewEmailExist) {
+    throw HttpError(409, 'Email in use');
+  }
 
-  const updatedUser = await User.findByIdAndUpdate(_id, req.body, {
-    new: true,
-  });
+  const updatedUser = await User.findByIdAndUpdate(
+    _id,
+    { avatar: req.file.path, ...req.body },
+    {
+      new: true,
+    }
+  );
 
   res.status(200).json({
     user: {
+      userID: updatedUser._id,
       email: updatedUser.email,
       firstName: updatedUser.firstName,
       lastName: updatedUser.lastName,
       patronymic: updatedUser.patronymic,
       phones: updatedUser.phones,
       userType: updatedUser.userType,
-      userID: updatedUser._id,
       avatar: updatedUser.avatar,
     },
   });

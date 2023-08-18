@@ -349,3 +349,13 @@ GET /api/users/facebook 18-08-2023_01:59:01
 GET / 18-08-2023_02:15:42
 GET /api/users/google 18-08-2023_02:15:44
 GET /api/users/google 18-08-2023_02:19:50
+GET / 18-08-2023_04:23:40
+POST /api/users/register 18-08-2023_04:44:17
+PUT /api/users/current/update 18-08-2023_04:45:48
+PUT /api/users/current/update 18-08-2023_04:48:00
+PUT /api/users/current/update 18-08-2023_04:51:22
+PUT /api/users/current/update 18-08-2023_04:52:00
+PUT /api/users/current/update 18-08-2023_04:53:17
+PUT /api/users/current/update 18-08-2023_04:53:51
+PUT /api/users/current/update 18-08-2023_04:55:13
+PUT /api/users/current/update 18-08-2023_04:56:01
