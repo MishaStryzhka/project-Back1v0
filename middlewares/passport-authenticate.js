@@ -59,7 +59,7 @@ const { FACEBOOK_CLIENT_ID, FACEBOOK_CLIENT_SECRET } = process.env;
 const facebookParams = {
   clientID: FACEBOOK_CLIENT_ID,
   clientSecret: FACEBOOK_CLIENT_SECRET,
-  callbackURL: 'http://localhost:4000/api/users/facebook/callback',
+  callbackURL: `${BASE_ONRENDER_URL}/api/users/facebook/callback`,
   profileFields: ['id', 'displayName', 'name', 'emails', 'photos'],
 };
 
