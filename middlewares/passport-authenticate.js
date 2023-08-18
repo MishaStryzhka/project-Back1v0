@@ -5,8 +5,7 @@ const { nanoid } = require('nanoid');
 
 const { User } = require('../models/index');
 
-const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, BASE_URL, BASE_ONRENDER_URL } =
-  process.env;
+const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, BASE_URL } = process.env;
 
 // ********** Google Authenticate ****************** //
 const googleParams = {
@@ -25,7 +24,8 @@ const googleCallback = async (
   done
 ) => {
   try {
-    const { email, displayName } = profile;
+    const { email, name, provider, picture } = profile;
+    console.log(profile.profider);
     const user = await User.findOne({ email });
 
     if (user) {
@@ -36,7 +36,10 @@ const googleCallback = async (
     const newUser = await User.create({
       email,
       password,
-      name: displayName,
+      firstName: name.givenName,
+      lastName: name.familyName,
+      provider,
+      avatar: picture,
     });
     done(null, newUser);
   } catch (error) {
@@ -69,9 +72,9 @@ const facebookCallback = async (
 ) => {
   // return done(null, profile);
   try {
-    const { emails, name } = profile;
+    const { emails, name, provider } = profile;
     const email = emails[0].value;
-
+    const avatar = profile.photos[0].value;
     const user = await User.findOne({ email });
 
     if (user) {
@@ -85,6 +88,8 @@ const facebookCallback = async (
       firstName: name.givenName,
       lastName: name.familyName,
       patronymic: name.middleName,
+      provider,
+      avatar,
     });
     done(null, newUser);
   } catch (error) {

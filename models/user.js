@@ -36,6 +36,10 @@ const userSchema = new Schema(
       enum: ['patient', 'doctor'],
     },
     contactMethods: [String],
+    provider: {
+      type: String,
+      default: 'Dentist Portal',
+    },
     avatar: String,
     token: {
       type: String,

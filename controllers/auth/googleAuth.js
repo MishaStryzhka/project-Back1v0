@@ -13,8 +13,6 @@ const googleAuth = async (req, res) => {
 
   const user = await User.findByIdAndUpdate(id, { token });
 
-  console.log(user);
-
   return res.redirect(`${FRONTEND_URL}?accessToken=${token}`);
 };
 

@@ -30,72 +30,31 @@ app.use(async (req, res, next) => {
 app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
-app.use(passport.initialize());
-app.use(
-  session({
-    resave: false,
-    saveUninitialized: true,
-    secret: 'bla bla bla',
-  })
-);
+// app.use(passport.initialize());
+// app.use(
+//   session({
+//     resave: false,
+//     saveUninitialized: true,
+//     secret: 'bla bla bla',
+//   })
+// );
+
+// Used to serialize the user
+// passport.serializeUser(function (user, done) {
+//   done(null, user);
+// });
+
+// // Used to deserialize the user
+// passport.deserializeUser(function (id, done) {
+//   return done(null, id);
+// });
 
 // **********************************************************************
-// const passport = require('passport');
-// const session = require('express-session');
-// const facebookStrategy = require('passport-facebook');
 
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
   res.render('index.ejs');
-});
-
-// -> Make facebook strategy
-// passport.use(
-//   new facebookStrategy(
-//     {
-//       // pull in our app id and secret from our auth.js file
-//       clientID: '589379329838445',
-//       clientSecret: '097de41207e5885678c08e2e94ae87dd',
-//       callbackURL: 'http://localhost:4000/api/users/facebook/callback',
-//       profileFields: ['id', 'displayName', 'name', 'emails', 'photos'],
-//     }, // facebook will send back the token and profile
-//     function (token, refreshToken, profile, done) {
-//       console.log(profile);
-//       return done(null, profile);
-//     }
-//   )
-// );
-
-// app.get(
-//   '/api/users/facebook',
-//   passport.authenticate('facebook', { scope: 'email' })
-// );
-
-// app.get(
-//   '/api/users/facebook/callback',
-//   passport.authenticate('facebook', {
-//     successRedirect: '/profile',
-//     failureRedirect: '/failed',
-//   })
-// );
-
-// app.get('/profile', (req, res) => {
-//   res.send('You are a valid user');
-// });
-
-// app.get('/failed', (req, res) => {
-//   res.send('You are a non valid user');
-// });
-
-// Used to serialize the user
-passport.serializeUser(function (user, done) {
-  done(null, user);
-});
-
-// Used to deserialize the user
-passport.deserializeUser(function (id, done) {
-  return done(null, id);
 });
 
 // **********************************************************************

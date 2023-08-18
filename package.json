@@ -14,7 +14,6 @@
     "cors": "2.8.5",
     "cross-env": "7.0.3",
     "dotenv": "^16.3.1",
-    "ejs": "^3.1.9",
     "express": "4.17.1",
     "express-session": "^1.17.3",
     "joi": "^17.9.2",
@@ -31,6 +30,7 @@
     "swagger-ui-express": "^5.0.0"
   },
   "devDependencies": {
+    "ejs": "^3.1.9",
     "eslint": "7.19.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-standard": "16.0.3",
