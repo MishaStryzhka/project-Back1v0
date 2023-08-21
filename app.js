@@ -30,32 +30,14 @@ app.use(async (req, res, next) => {
 app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
-// app.use(passport.initialize());
-// app.use(
-//   session({
-//     resave: false,
-//     saveUninitialized: true,
-//     secret: 'bla bla bla',
-//   })
-// );
-
-// Used to serialize the user
-// passport.serializeUser(function (user, done) {
-//   done(null, user);
-// });
-
-// // Used to deserialize the user
-// passport.deserializeUser(function (id, done) {
-//   return done(null, id);
-// });
 
 // **********************************************************************
 
-app.set('view engine', 'ejs');
+// app.set('view engine', 'ejs');
 
-app.get('/', (req, res) => {
-  res.render('index.ejs');
-});
+// app.get('/', (req, res) => {
+//   res.render('index.ejs');
+// });
 
 // **********************************************************************
 
