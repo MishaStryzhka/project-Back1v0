@@ -365,3 +365,11 @@ PUT /api/users/current/update 18-08-2023_05:12:17
 PUT /api/users/current/update 18-08-2023_05:14:38
 PUT /api/users/current/update 18-08-2023_05:15:37
 DELETE /api/users/current 18-08-2023_05:16:40
+POST /api/users/login 21-08-2023_12:14:54
+DELETE /api/users/current 21-08-2023_12:15:10
+DELETE /api/users/current 21-08-2023_12:15:48
+DELETE /api/users/current 21-08-2023_12:21:44
+DELETE /api/users/current 21-08-2023_12:22:09
+POST /api/users/login 21-08-2023_12:24:06
+POST /api/users/register 21-08-2023_12:24:10
+DELETE /api/users/delete 21-08-2023_12:24:23
