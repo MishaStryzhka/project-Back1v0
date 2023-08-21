@@ -12,6 +12,7 @@ const {
   loginSchema,
   updateSchema,
   updateUserTypeSchema,
+  refreshPasswordSchema,
 } = require('../../schemas/users');
 
 const router = express.Router();
@@ -48,5 +49,12 @@ router.patch(
 );
 
 router.delete('/delete', authenticate, ctrl.deleteById);
+
+router.patch(
+  '/current/refreshPassword',
+  authenticate,
+  validateBody(refreshPasswordSchema),
+  ctrl.refreshPassword
+);
 
 module.exports = router;
