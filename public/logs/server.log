@@ -388,3 +388,7 @@ PATCH /api/users/current/refreshPassword 21-08-2023_01:30:04
 PATCH /api/users/current/refreshPassword 21-08-2023_01:30:26
 PATCH /api/users/current/refreshPassword 21-08-2023_01:30:34
 PATCH /api/users/current/refreshPassword 21-08-2023_01:30:47
+POST /api/users/register 23-08-2023_05:13:17
+PATCH /api/users/current/refreshEmail 23-08-2023_05:17:49
+PATCH /api/users/current/refreshEmail 23-08-2023_05:18:03
+PATCH /api/users/current/refreshEmail 23-08-2023_05:18:08

@@ -13,6 +13,7 @@ const {
   updateSchema,
   updateUserTypeSchema,
   refreshPasswordSchema,
+  refreshEmailSchema,
 } = require('../../schemas/users');
 
 const router = express.Router();
@@ -55,6 +56,13 @@ router.patch(
   authenticate,
   validateBody(refreshPasswordSchema),
   ctrl.refreshPassword
+);
+
+router.patch(
+  '/current/refreshEmail',
+  authenticate,
+  validateBody(refreshEmailSchema),
+  ctrl.refreshEmail
 );
 
 module.exports = router;
