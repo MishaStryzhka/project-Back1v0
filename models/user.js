@@ -6,10 +6,14 @@ const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 const userSchema = new Schema(
   {
     email: {
-      type: String,
-      match: emailRegexp,
-      unique: true,
-      required: [true, 'Email is required'],
+      type: {
+        type: String,
+        lowercase: true,
+        trim: true,
+        match: emailRegexp,
+        unique: true,
+        required: [true, 'Email is required'],
+      },
     },
     password: {
       type: String,
@@ -17,16 +21,13 @@ const userSchema = new Schema(
       required: [true, 'Set password for user'],
     },
     firstName: {
-      type: String,
-      minlength: 3,
+      type: { type: String, lowercase: true, trim: true, minlength: 3 },
     },
     lastName: {
-      type: String,
-      minlength: 3,
+      type: { type: String, lowercase: true, trim: true, minlength: 3 },
     },
     patronymic: {
-      type: String,
-      minlength: 5,
+      type: { type: String, lowercase: true, trim: true, minlength: 5 },
     },
     phones: {
       type: [String],
@@ -36,6 +37,23 @@ const userSchema = new Schema(
       enum: ['patient', 'doctor'],
     },
     contactMethods: [String],
+    experienceYears: { type: String, lowercase: true, trim: true },
+
+    educations: [
+      {
+        name: { type: String, lowercase: true, trim: true },
+        years: [String],
+      },
+    ],
+    paymentMethods: [
+      {
+        type: String,
+        lowercase: true,
+        trim: true,
+        enum: ['Visa', 'MasterCard'],
+      },
+    ],
+
     provider: {
       type: String,
       default: 'Dentist Portal',

@@ -3,17 +3,14 @@ const { User } = require('../../models');
 
 const updateCurrentUser = async (req, res, next) => {
   const { _id } = req.user;
-  const { email, phones } = req.body;
+  const { email, phones, educations, paymentMethods } = req.body;
 
   const user = await User.findById(_id);
   if (!user) {
     next(HttpError(401, 'Not authorized'));
   }
 
-  console.log(req.file);
-  console.log(req.body);
   // -> Check if new phone number already exist
-
   if (phones) {
     const phonesArr = phones.substring(1, phones.length - 1).split(',');
     let indexPhoneInUse = '';
@@ -31,10 +28,18 @@ const updateCurrentUser = async (req, res, next) => {
     throw HttpError(404, 'Not found');
   }
 
-  const isNewEmailExist = await User.findOne({ email });
+  let educationsArr;
+  if (educations) {
+    educationsArr = JSON.parse(req.body.educations);
+    req.body.educations = educationsArr;
+  }
 
-  if (isNewEmailExist) {
-    throw HttpError(409, 'Email in use');
+  // -> Add / Update payment method
+  if (paymentMethods) {
+    const paymentMethodArr = paymentMethods
+      .substring(1, paymentMethods.length - 1)
+      .split(',');
+    req.body.paymentMethods = paymentMethodArr;
   }
 
   const updatedUser = await User.findByIdAndUpdate(
@@ -54,7 +59,10 @@ const updateCurrentUser = async (req, res, next) => {
       patronymic: updatedUser.patronymic,
       phones: updatedUser.phones,
       userType: updatedUser.userType,
+      experienceYears: updatedUser.experienceYears,
       avatar: updatedUser.avatar,
+      educations: updatedUser.educations,
+      paymentMethods: updatedUser.paymentMethods,
     },
   });
 };
