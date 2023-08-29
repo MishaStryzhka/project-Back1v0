@@ -7,6 +7,8 @@ const userSchema = new Schema(
   {
     email: {
       type: String,
+      lowercase: true,
+      trim: true,
       match: emailRegexp,
       unique: true,
       required: [true, 'Email is required'],
@@ -17,16 +19,13 @@ const userSchema = new Schema(
       required: [true, 'Set password for user'],
     },
     firstName: {
-      type: String,
-      minlength: 3,
+      type: { type: String, lowercase: true, trim: true, minlength: 3 },
     },
     lastName: {
-      type: String,
-      minlength: 3,
+      type: { type: String, lowercase: true, trim: true, minlength: 3 },
     },
     patronymic: {
-      type: String,
-      minlength: 5,
+      type: { type: String, lowercase: true, trim: true, minlength: 5 },
     },
     phones: {
       type: [String],
@@ -36,11 +35,66 @@ const userSchema = new Schema(
       enum: ['patient', 'doctor'],
     },
     contactMethods: [String],
+
+    // -> Fields for DOCTOR
+    directionsOfWork: [String],
+    problemsItSolves: [String],
+
+    experienceYears: { type: String, lowercase: true, trim: true },
+
+    educations: [
+      {
+        name: { type: String, lowercase: true, trim: true },
+        years: [
+          {
+            begin: { type: String, lowercase: true, trim: true },
+            end: { type: String, lowercase: true, trim: true },
+          },
+        ],
+      },
+    ],
+    paymentMethods: [
+      {
+        type: String,
+        lowercase: true,
+        trim: true,
+        enum: ['Visa', 'MasterCard'],
+      },
+    ],
+
+    jobs: [
+      {
+        name: { type: String, lowercase: true, trim: true },
+        cityArea: { type: String, lowercase: true, trim: true },
+        address: { type: String, lowercase: true, trim: true },
+        workSchedule: [
+          {
+            begin: { type: String, lowercase: true, trim: true },
+            end: { type: String, lowercase: true, trim: true },
+          },
+        ],
+        receptionHours: [
+          {
+            begin: { type: String, lowercase: true, trim: true },
+            end: { type: String, lowercase: true, trim: true },
+          },
+        ],
+      },
+    ],
+
     provider: {
       type: String,
       default: 'Dentist Portal',
     },
     avatar: String,
+
+    certificates: [
+      {
+        path: { type: String, lowercase: true, trim: true },
+        certificatePublicID: { type: String, lowercase: true, trim: true },
+      },
+    ],
+
     avatarPublicId: String,
     token: {
       type: String,

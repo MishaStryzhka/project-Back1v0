@@ -3,17 +3,22 @@ const { User } = require('../../models');
 
 const updateCurrentUser = async (req, res, next) => {
   const { _id } = req.user;
-  const { email, phones } = req.body;
+  const {
+    email,
+    phones,
+    educations,
+    paymentMethods,
+    jobs,
+    problemsItSolves,
+    directionsOfWork,
+  } = req.body;
 
   const user = await User.findById(_id);
   if (!user) {
     next(HttpError(401, 'Not authorized'));
   }
 
-  console.log(req.file);
-  console.log(req.body);
   // -> Check if new phone number already exist
-
   if (phones) {
     const phonesArr = phones.substring(1, phones.length - 1).split(',');
     let indexPhoneInUse = '';
@@ -31,15 +36,78 @@ const updateCurrentUser = async (req, res, next) => {
     throw HttpError(404, 'Not found');
   }
 
-  const isNewEmailExist = await User.findOne({ email });
+  let educationsArr;
+  if (educations) {
+    educationsArr = JSON.parse(req.body.educations);
+    req.body.educations = educationsArr;
+  }
 
-  if (isNewEmailExist) {
-    throw HttpError(409, 'Email in use');
+  // -> Add / Update payment method
+  if (paymentMethods) {
+    const paymentMethodArr = paymentMethods
+      .substring(1, paymentMethods.length - 1)
+      .split(',');
+    req.body.paymentMethods = paymentMethodArr;
+  }
+
+  // -> Add / Update Doctor job
+  if (jobs) {
+    // const a = [
+    //   {
+    //     name: 'DENTIST',
+    //     cityArea: 'Kiev',
+    //     address: 'Heroiv Urkainu 3',
+    //     workSchedule: [{ begin: 9, end: 3 }],
+    //     receptionHours: [{ begin: 11, end: 15 }],
+    //   },
+    // ];
+    // console.log(JSON.stringify(a));
+    req.body.jobs = JSON.parse(jobs);
+  }
+
+  // -> Set / Update User Avatar
+  if (req.files.avatar) {
+    req.body.avatar = req.files.avatar[0].path;
+    req.body.avatarPublicId = req.files.avatar[0].filename;
+  }
+
+  // -> Set / Update User Certificates
+  if (req.files.certificates) {
+    req.body.certificates = [...req.user.certificates];
+    req.files.certificates.map((el) =>
+      req.body.certificates.push({
+        path: el.path,
+        certificatePublicID: el.filename,
+      })
+    );
+  }
+
+  // -> Set / Update Problems that doctor treat
+  if (problemsItSolves) {
+    console.log(req.user);
+    const problemsItSolvesArr = problemsItSolves
+      .substring(1, problemsItSolves.length - 1)
+      .split(',');
+    req.body.problemsItSolves = [
+      ...req.user.problemsItSolves,
+      ...problemsItSolvesArr,
+    ];
+  }
+
+  // -> Set / Update Problems that doctor treat
+  if (directionsOfWork) {
+    const directionsOfWorkArr = directionsOfWork
+      .substring(1, directionsOfWork.length - 1)
+      .split(',');
+    req.body.directionsOfWork = [
+      ...req.user.directionsOfWork,
+      ...directionsOfWorkArr,
+    ];
   }
 
   const updatedUser = await User.findByIdAndUpdate(
     _id,
-    { avatar: req.file.path, avatarPublicId: req.file.filename, ...req.body },
+    { ...req.body },
     {
       new: true,
     }
@@ -54,7 +122,14 @@ const updateCurrentUser = async (req, res, next) => {
       patronymic: updatedUser.patronymic,
       phones: updatedUser.phones,
       userType: updatedUser.userType,
+      experienceYears: updatedUser.experienceYears,
       avatar: updatedUser.avatar,
+      educations: updatedUser.educations,
+      paymentMethods: updatedUser.paymentMethods,
+      jobs: updatedUser.jobs,
+      certificates: updatedUser.certificates,
+      directionsOfWork: updatedUser.directionsOfWork,
+      problemsItSolves: updatedUser.problemsItSolves,
     },
   });
 };

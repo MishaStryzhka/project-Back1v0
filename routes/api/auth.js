@@ -3,7 +3,7 @@ const express = require('express');
 const {
   validateBody,
   authenticate,
-  uploadUserAvatar,
+  upload,
   passport,
 } = require('../../middlewares');
 
@@ -35,11 +35,17 @@ router.post('/register', validateBody(registerSchema), ctrl.register);
 router.post('/login', validateBody(loginSchema), ctrl.login);
 router.post('/logout', authenticate, ctrl.logout);
 router.get('/current', authenticate, ctrl.getCurrentUser);
+
+// upload.fields([{name: "avatar", maxCount: 1}, {name: certificates, maxCount: 50}])
+// upload.array("avatar", 9)
 router.put(
   '/current/update',
   authenticate,
   validateBody(updateSchema),
-  uploadUserAvatar.single('avatar'),
+  upload.fields([
+    { name: 'avatar', maxCount: 1 },
+    { name: 'certificates', maxCount: 50 },
+  ]),
   ctrl.updateCurrentUser
 );
 router.patch(
