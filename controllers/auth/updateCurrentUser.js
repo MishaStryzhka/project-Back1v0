@@ -57,9 +57,24 @@ const updateCurrentUser = async (req, res, next) => {
     req.body.jobs = JSON.parse(jobs);
   }
 
+  // -> Set / Update User Avatar
+  if (req.files.avatar) {
+    req.body.avatar = req.files.avatar[0].path;
+    req.body.avatarPublicId = req.files.avatar[0].filename;
+  }
+
+  // -> Set / Update User Certificates
+  if (req.files.certificates) {
+    if (req.body.certificates) {
+      req.files.certificates.map((el) => req.body.certificates.push(el.path));
+    }
+    req.body.certificates = [];
+    req.files.certificates.map((el) => req.body.certificates.push(el.path));
+  }
+
   const updatedUser = await User.findByIdAndUpdate(
     _id,
-    { avatar: req.file.path, avatarPublicId: req.file.filename, ...req.body },
+    { ...req.body },
     {
       new: true,
     }
@@ -79,6 +94,7 @@ const updateCurrentUser = async (req, res, next) => {
       educations: updatedUser.educations,
       paymentMethods: updatedUser.paymentMethods,
       jobs: updatedUser.jobs,
+      certificates: updatedUser.certificates,
     },
   });
 };

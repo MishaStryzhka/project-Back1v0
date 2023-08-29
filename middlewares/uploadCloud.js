@@ -15,7 +15,6 @@ const storage = new CloudinaryStorage({
     folder: (req, file) => req.fileConfig.folder,
     allowed_formats: ['jpg', 'png', 'bmp'],
     format: (req, file) => (file.mimetype === 'image/png' ? 'png' : 'jpg'),
-    
   },
 });
 
@@ -47,11 +46,10 @@ const uploadCloud = ({ field, ...restConfig }) => {
 
   return (req, res, next) => {
     req.fileConfig = restConfig;
-    uploadMiddleware(req, res, err => {
+    uploadMiddleware(req, res, (err) => {
       next(err && new HttpError(err.status || 400, err.message));
     });
   };
 };
 
 module.exports = uploadCloud;
-

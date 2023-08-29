@@ -22,7 +22,7 @@ const storage = new CloudinaryStorage({
 
     if (file.fieldname === 'avatar') {
       folder = 'DentistPortal_Avatars';
-    } else if (file.fieldname === 'certificate') {
+    } else if (file.fieldname === 'certificates') {
       folder = 'DentistPortal_Certificates';
     } else {
       folder = 'misc';
@@ -39,6 +39,6 @@ const storage = new CloudinaryStorage({
   },
 });
 
-const uploadUserAvatar = multer({ storage });
+const upload = multer({ storage });
 
-module.exports = uploadUserAvatar;
+module.exports = upload;

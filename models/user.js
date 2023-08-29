@@ -6,14 +6,12 @@ const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 const userSchema = new Schema(
   {
     email: {
-      type: {
-        type: String,
-        lowercase: true,
-        trim: true,
-        match: emailRegexp,
-        unique: true,
-        required: [true, 'Email is required'],
-      },
+      type: String,
+      lowercase: true,
+      trim: true,
+      match: emailRegexp,
+      unique: true,
+      required: [true, 'Email is required'],
     },
     password: {
       type: String,
