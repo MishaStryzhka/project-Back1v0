@@ -73,15 +73,7 @@ const updateCurrentUser = async (req, res, next) => {
 
   // -> Set / Update User Certificates
   if (req.files.certificates) {
-    if (req.body.certificates) {
-      req.files.certificates.map((el) =>
-        req.body.certificates.push({
-          path: el.path,
-          certificatePublicID: el.filename,
-        })
-      );
-    }
-    req.body.certificates = [];
+    req.body.certificates = [...req.user.certificates];
     req.files.certificates.map((el) =>
       req.body.certificates.push({
         path: el.path,
