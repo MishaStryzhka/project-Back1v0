@@ -3,7 +3,7 @@ const { User } = require('../../models');
 
 const updateCurrentUser = async (req, res, next) => {
   const { _id } = req.user;
-  const { email, phones, educations, paymentMethods } = req.body;
+  const { email, phones, educations, paymentMethods, jobs } = req.body;
 
   const user = await User.findById(_id);
   if (!user) {
@@ -42,6 +42,21 @@ const updateCurrentUser = async (req, res, next) => {
     req.body.paymentMethods = paymentMethodArr;
   }
 
+  // -> Add / Update Doctor job
+  if (jobs) {
+    // const a = [
+    //   {
+    //     name: 'DENTIST',
+    //     cityArea: 'Kiev',
+    //     address: 'Heroiv Urkainu 3',
+    //     workSchedule: [{ begin: 9, end: 3 }],
+    //     receptionHours: [{ begin: 11, end: 15 }],
+    //   },
+    // ];
+    // console.log(JSON.stringify(a));
+    req.body.jobs = JSON.parse(jobs);
+  }
+
   const updatedUser = await User.findByIdAndUpdate(
     _id,
     { avatar: req.file.path, avatarPublicId: req.file.filename, ...req.body },
@@ -63,6 +78,7 @@ const updateCurrentUser = async (req, res, next) => {
       avatar: updatedUser.avatar,
       educations: updatedUser.educations,
       paymentMethods: updatedUser.paymentMethods,
+      jobs: updatedUser.jobs,
     },
   });
 };

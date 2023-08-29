@@ -42,7 +42,12 @@ const userSchema = new Schema(
     educations: [
       {
         name: { type: String, lowercase: true, trim: true },
-        years: [String],
+        years: [
+          {
+            begin: { type: String, lowercase: true, trim: true },
+            end: { type: String, lowercase: true, trim: true },
+          },
+        ],
       },
     ],
     paymentMethods: [
@@ -54,11 +59,34 @@ const userSchema = new Schema(
       },
     ],
 
+    jobs: [
+      {
+        name: { type: String, lowercase: true, trim: true },
+        cityArea: { type: String, lowercase: true, trim: true },
+        address: { type: String, lowercase: true, trim: true },
+        workSchedule: [
+          {
+            begin: { type: String, lowercase: true, trim: true },
+            end: { type: String, lowercase: true, trim: true },
+          },
+        ],
+        receptionHours: [
+          {
+            begin: { type: String, lowercase: true, trim: true },
+            end: { type: String, lowercase: true, trim: true },
+          },
+        ],
+      },
+    ],
+
     provider: {
       type: String,
       default: 'Dentist Portal',
     },
     avatar: String,
+
+    certificates: [String],
+
     avatarPublicId: String,
     token: {
       type: String,
