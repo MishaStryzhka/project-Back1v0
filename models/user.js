@@ -83,7 +83,12 @@ const userSchema = new Schema(
     },
     avatar: String,
 
-    certificates: [String],
+    certificates: [
+      {
+        path: { type: String, lowercase: true, trim: true },
+        certificatePublicID: { type: String, lowercase: true, trim: true },
+      },
+    ],
 
     avatarPublicId: String,
     token: {

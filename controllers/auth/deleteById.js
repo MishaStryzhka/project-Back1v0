@@ -3,11 +3,16 @@ const { User } = require('../../models');
 const cloudinary = require('cloudinary');
 
 const deleteById = async (req, res) => {
-  const { id, avatarPublicId } = req.user;
+  const { id, avatarPublicId, certificates } = req.user;
 
   if (avatarPublicId) {
     // -> Delete img on Cloudinary
     await cloudinary.uploader.destroy(avatarPublicId);
+  }
+  if (certificates) {
+    certificates.forEach((certificate) => {
+      cloudinary.uploader.destroy(certificate.certificatePublicID);
+    });
   }
 
   // -> Delete user from DB collection
