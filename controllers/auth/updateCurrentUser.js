@@ -3,7 +3,15 @@ const { User } = require('../../models');
 
 const updateCurrentUser = async (req, res, next) => {
   const { _id } = req.user;
-  const { email, phones, educations, paymentMethods, jobs } = req.body;
+  const {
+    email,
+    phones,
+    educations,
+    paymentMethods,
+    jobs,
+    problemsItSolves,
+    directionsOfWork,
+  } = req.body;
 
   const user = await User.findById(_id);
   if (!user) {
@@ -82,6 +90,29 @@ const updateCurrentUser = async (req, res, next) => {
     );
   }
 
+  // -> Set / Update Problems that doctor treat
+  if (problemsItSolves) {
+    console.log(req.user);
+    const problemsItSolvesArr = problemsItSolves
+      .substring(1, problemsItSolves.length - 1)
+      .split(',');
+    req.body.problemsItSolves = [
+      ...req.user.problemsItSolves,
+      ...problemsItSolvesArr,
+    ];
+  }
+
+  // -> Set / Update Problems that doctor treat
+  if (directionsOfWork) {
+    const directionsOfWorkArr = directionsOfWork
+      .substring(1, directionsOfWork.length - 1)
+      .split(',');
+    req.body.directionsOfWork = [
+      ...req.user.directionsOfWork,
+      ...directionsOfWorkArr,
+    ];
+  }
+
   const updatedUser = await User.findByIdAndUpdate(
     _id,
     { ...req.body },
@@ -105,6 +136,8 @@ const updateCurrentUser = async (req, res, next) => {
       paymentMethods: updatedUser.paymentMethods,
       jobs: updatedUser.jobs,
       certificates: updatedUser.certificates,
+      directionsOfWork: updatedUser.directionsOfWork,
+      problemsItSolves: updatedUser.problemsItSolves,
     },
   });
 };

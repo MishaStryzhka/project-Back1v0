@@ -35,6 +35,11 @@ const userSchema = new Schema(
       enum: ['patient', 'doctor'],
     },
     contactMethods: [String],
+
+    // -> Fields for DOCTOR
+    directionsOfWork: [String],
+    problemsItSolves: [String],
+
     experienceYears: { type: String, lowercase: true, trim: true },
 
     educations: [
