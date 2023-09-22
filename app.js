@@ -39,6 +39,10 @@ app.use(express.json());
 //   res.render('index.ejs');
 // });
 
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+
 // **********************************************************************
 
 app.use('/api/users', authRouter);
