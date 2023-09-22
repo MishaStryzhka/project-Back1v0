@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+
 const { HttpError } = require('../../helpers');
 const { User } = require('../../models');
 
@@ -5,7 +7,9 @@ const refreshPassword = async (req, res) => {
   const { password: reqOldPassword, newPassword } = req.body;
   const { password: currentPassword } = req.user;
 
-  if (reqOldPassword !== currentPassword) {
+  const passwordCompare = await bcrypt.compare(reqOldPassword, currentPassword);
+
+  if (!passwordCompare) {
     throw HttpError(409, 'Not correct password');
   }
 
@@ -15,9 +19,11 @@ const refreshPassword = async (req, res) => {
     throw HttpError(401, 'Not authorized');
   }
 
+  const hashPassword = await bcrypt.hash(newPassword, 10);
+
   const updatedUser = await User.findByIdAndUpdate(
     user._id,
-    { password: newPassword },
+    { password: hashPassword },
     {
       new: true,
     }
