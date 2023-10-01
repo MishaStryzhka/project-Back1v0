@@ -20,15 +20,24 @@ const updateCurrentUser = async (req, res, next) => {
 
   // -> Check if new phone number already exist
   if (phones) {
-    const phonesArr = phones.substring(1, phones.length - 1).split(',');
-    let indexPhoneInUse = '';
-    const isPhoneExist = phonesArr.some((phone) => {
-      indexPhoneInUse = user.phones.indexOf(phone);
-      return user.phones.indexOf(phone) >= 0;
-    });
-    if (isPhoneExist) {
-      throw HttpError(409, `Phone ${user.phones[indexPhoneInUse]} in use`);
-    }
+    const phonesArr = phones.split(',');
+
+    // ===========================
+    // !!!Потрібно допрацювати!!!
+    // ===========================
+
+    // let indexPhoneInUse = "";
+    // const isPhoneExist = phonesArr.some((phone) => {
+    //     indexPhoneInUse = user.phones.indexOf(phone);
+    //     return user.phones.indexOf(phone) >= 0;
+    // });
+    // if (isPhoneExist) {
+    //     throw HttpError(
+    //         409,
+    //         `Phone ${user.phones[indexPhoneInUse]} in use`
+    //     );
+    // }
+
     req.body.phones = phonesArr;
   }
 
@@ -74,7 +83,7 @@ const updateCurrentUser = async (req, res, next) => {
   // -> Set / Update User Certificates
   if (req.files.certificates) {
     req.body.certificates = [...req.user.certificates];
-    req.files.certificates.map((el) =>
+    req.files.certificates.map(el =>
       req.body.certificates.push({
         path: el.path,
         certificatePublicID: el.filename,
