@@ -11,6 +11,7 @@ const updateCurrentUser = async (req, res, next) => {
     jobs,
     problemsItSolves,
     directionsOfWork,
+    contactMethods,
   } = req.body;
 
   const user = await User.findById(_id);
@@ -114,6 +115,13 @@ const updateCurrentUser = async (req, res, next) => {
     ];
   }
 
+  // -> Check if new phone number already exist
+  if (contactMethods) {
+    const contactMethodsArr = contactMethods.split(',');
+
+    req.body.contactMethods = contactMethodsArr;
+  }
+
   const updatedUser = await User.findByIdAndUpdate(
     _id,
     { ...req.body },
@@ -139,6 +147,7 @@ const updateCurrentUser = async (req, res, next) => {
       certificates: updatedUser.certificates,
       directionsOfWork: updatedUser.directionsOfWork,
       problemsItSolves: updatedUser.problemsItSolves,
+      contactMethod: updatedUser.contactMethod,
     },
   });
 };

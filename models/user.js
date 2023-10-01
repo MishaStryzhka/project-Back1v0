@@ -34,7 +34,9 @@ const userSchema = new Schema(
       type: String,
       enum: ['patient', 'doctor'],
     },
-    contactMethods: [String],
+    contactMethods: {
+      type: [String],
+    },
 
     // -> Fields for DOCTOR
     directionsOfWork: [String],
