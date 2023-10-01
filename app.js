@@ -14,6 +14,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
 const authRouter = require('./routes/api/auth');
+const path = require('path');
 
 const app = express();
 
@@ -40,7 +41,7 @@ app.use(express.json());
 // });
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(path.join(__dirname, '/index.html'));
 });
 
 // **********************************************************************
