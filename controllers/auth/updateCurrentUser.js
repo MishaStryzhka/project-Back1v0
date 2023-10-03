@@ -147,7 +147,7 @@ const updateCurrentUser = async (req, res, next) => {
       certificates: updatedUser.certificates,
       directionsOfWork: updatedUser.directionsOfWork,
       problemsItSolves: updatedUser.problemsItSolves,
-      contactMethod: updatedUser.contactMethod,
+      contactMethods: updatedUser.contactMethods,
     },
   });
 };
