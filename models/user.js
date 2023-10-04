@@ -20,19 +20,16 @@ const userSchema = new Schema(
     },
     firstName: {
       type: String,
-      lowercase: true,
       trim: true,
       minlength: 3,
     },
     lastName: {
       type: String,
-      lowercase: true,
       trim: true,
       minlength: 3,
     },
     patronymic: {
       type: String,
-      lowercase: true,
       trim: true,
       minlength: 5,
     },
@@ -45,6 +42,11 @@ const userSchema = new Schema(
     },
     contactMethods: {
       type: [String],
+    },
+    age: {
+      type: Number,
+      min: 1,
+      max: 120,
     },
 
     // -> Fields for DOCTOR

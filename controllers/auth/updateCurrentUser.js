@@ -148,6 +148,7 @@ const updateCurrentUser = async (req, res, next) => {
       directionsOfWork: updatedUser.directionsOfWork,
       problemsItSolves: updatedUser.problemsItSolves,
       contactMethods: updatedUser.contactMethods,
+      age: updatedUser.age,
     },
   });
 };
