@@ -19,13 +19,19 @@ const userSchema = new Schema(
       required: [true, 'Set password for user'],
     },
     firstName: {
-      type: { type: String, lowercase: true, trim: true, minlength: 3 },
+      type: String,
+      trim: true,
+      minlength: 3,
     },
     lastName: {
-      type: { type: String, lowercase: true, trim: true, minlength: 3 },
+      type: String,
+      trim: true,
+      minlength: 3,
     },
     patronymic: {
-      type: { type: String, lowercase: true, trim: true, minlength: 5 },
+      type: String,
+      trim: true,
+      minlength: 5,
     },
     phones: {
       type: [String],
@@ -36,6 +42,11 @@ const userSchema = new Schema(
     },
     contactMethods: {
       type: [String],
+    },
+    age: {
+      type: Number,
+      min: 1,
+      max: 120,
     },
 
     // -> Fields for DOCTOR
