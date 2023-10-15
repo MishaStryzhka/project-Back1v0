@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose');
 const { handleMongooseError } = require('../helpers');
 
+// eslint-disable-next-line no-useless-escape
 const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 const userSchema = new Schema(
@@ -43,10 +44,9 @@ const userSchema = new Schema(
     contactMethods: {
       type: [String],
     },
-    age: {
-      type: Number,
-      min: 1,
-      max: 120,
+    dateOfBirthday: {
+      type: Date,
+      max: new Date(),
     },
 
     // -> Fields for DOCTOR
@@ -57,13 +57,12 @@ const userSchema = new Schema(
 
     educations: [
       {
-        name: { type: String, lowercase: true, trim: true },
-        years: [
-          {
-            begin: { type: String, lowercase: true, trim: true },
-            end: { type: String, lowercase: true, trim: true },
-          },
-        ],
+        _id: { type: String },
+        name: { type: String, trim: true },
+        years: {
+          begin: { type: Number },
+          end: { type: Number },
+        },
       },
     ],
     paymentMethods: [
@@ -82,8 +81,8 @@ const userSchema = new Schema(
         address: { type: String, lowercase: true, trim: true },
         workSchedule: [
           {
-            begin: { type: String, lowercase: true, trim: true },
-            end: { type: String, lowercase: true, trim: true },
+            begin: { type: Number },
+            end: { type: Number },
           },
         ],
         receptionHours: [
