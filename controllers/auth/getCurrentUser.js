@@ -16,7 +16,7 @@ const getCurrentUser = async (req, res, next) => {
     firstName,
     lastName,
     patronymic,
-    age,
+    dateOfBirthday,
     phones,
     contactMethods,
     directionsOfWork,
@@ -26,6 +26,7 @@ const getCurrentUser = async (req, res, next) => {
     educations,
     jobs,
     certificates,
+    experienceYears,
   } = user;
 
   console.log(user);
@@ -37,7 +38,7 @@ const getCurrentUser = async (req, res, next) => {
       firstName,
       lastName,
       patronymic,
-      age,
+      dateOfBirthday,
       phones,
       contactMethods,
       directionsOfWork,
@@ -47,6 +48,7 @@ const getCurrentUser = async (req, res, next) => {
       educations,
       jobs,
       certificates,
+      experienceYears,
     },
   });
 };
