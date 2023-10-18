@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const validator = require('validator');
 const { handleMongooseError } = require('../helpers');
 
 // eslint-disable-next-line no-useless-escape
@@ -47,6 +48,54 @@ const userSchema = new Schema(
     dateOfBirthday: {
       type: Date,
       max: new Date(),
+    },
+
+    links: {
+      type: new Schema({
+        instagram: {
+          type: String,
+          required: true,
+          validate: {
+            validator: value => {
+              const instagramRegex =
+                /^(https?:\/\/)?(www\.)?instagram\.com\/[a-zA-Z0-9_.]+\/?$/;
+              return instagramRegex.test(value);
+            },
+            message: 'Недійсний URL Instagram-профілю',
+          },
+        },
+        tiktok: {
+          type: String,
+          required: true,
+          validate: {
+            validator: value => {
+              const tiktokRegex =
+                /^(https?:\/\/)?(www\.)?tiktok\.com\/@[a-zA-Z0-9_.]+\/?$/;
+              return tiktokRegex.test(value);
+            },
+            message: 'Недійсний URL TikTok-профілю',
+          },
+        },
+        otherLink: {
+          type: String,
+          required: true,
+          validate: {
+            validator: value => {
+              return validator.isURL(value, {
+                protocols: ['http', 'https'],
+                require_tld: true,
+                require_protocol: true,
+              });
+            },
+            message: 'Недійсний URL',
+          },
+        },
+        _id: {
+          type: Schema.Types.ObjectId,
+          auto: false, // Вимкніть автоматичне створення _id
+        },
+      }),
+      required: true,
     },
 
     // -> Fields for DOCTOR

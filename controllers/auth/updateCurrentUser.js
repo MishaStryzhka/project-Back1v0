@@ -12,7 +12,10 @@ const updateCurrentUser = async (req, res, next) => {
     problemsItSolves,
     directionsOfWork,
     contactMethods,
+    links,
   } = req.body;
+
+  console.log('req.body', req.body);
 
   const user = await User.findById(_id);
   if (!user) {
@@ -46,10 +49,20 @@ const updateCurrentUser = async (req, res, next) => {
     throw HttpError(404, 'Not found');
   }
 
+  // -> Add / Update educations
   let educationsArr;
   if (educations) {
     educationsArr = JSON.parse(req.body.educations);
+
     req.body.educations = educationsArr;
+  }
+
+  // -> Add / Update links
+  let linksArr;
+  if (links) {
+    linksArr = JSON.parse(req.body.links);
+
+    req.body.links = linksArr;
   }
 
   // -> Add / Update payment method
@@ -130,6 +143,10 @@ const updateCurrentUser = async (req, res, next) => {
     }
   );
 
+  console.log('req.body', req.body);
+
+  console.log('updatedUser', updatedUser);
+
   res.status(200).json({
     user: {
       userID: updatedUser._id,
@@ -149,6 +166,7 @@ const updateCurrentUser = async (req, res, next) => {
       problemsItSolves: updatedUser.problemsItSolves,
       contactMethods: updatedUser.contactMethods,
       dateOfBirthday: updatedUser.dateOfBirthday,
+      links: updatedUser.links,
     },
   });
 };
