@@ -100,7 +100,25 @@ const userSchema = new Schema(
 
     // -> Fields for DOCTOR
     directionsOfWork: [String],
-    problemsItSolves: [String],
+    problemsItSolves: {
+      type: Schema.Types.Mixed,
+      validate: {
+        validator: function (value) {
+          if (!value || Object.keys(value).length === 0) {
+            return false;
+          }
+
+          for (const key in value) {
+            if (typeof value[key] !== 'number' || value[key] < 0) {
+              return false;
+            }
+          }
+
+          return true;
+        },
+        message: 'Invalid format or negative value for problemsItSolves',
+      },
+    },
 
     experienceYears: { type: String, lowercase: true, trim: true },
 
@@ -117,23 +135,19 @@ const userSchema = new Schema(
     paymentMethods: [
       {
         type: String,
-        lowercase: true,
-        trim: true,
-        enum: ['Visa', 'MasterCard'],
+        enum: ['cash', 'card'],
       },
     ],
 
     jobs: [
       {
-        name: { type: String, lowercase: true, trim: true },
-        cityArea: { type: String, lowercase: true, trim: true },
-        address: { type: String, lowercase: true, trim: true },
-        workSchedule: [
-          {
-            begin: { type: Number },
-            end: { type: Number },
-          },
-        ],
+        _id: { type: String },
+        name: { type: String, trim: true },
+        cityArea: { type: String, trim: true },
+        address: { type: String, trim: true },
+        workSchedule: {
+          type: String,
+        },
         receptionHours: [
           {
             begin: { type: String, lowercase: true, trim: true },
