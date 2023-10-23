@@ -68,9 +68,10 @@ const updateCurrentUser = async (req, res, next) => {
   // -> Add / Update payment method
   if (paymentMethods) {
     const paymentMethodArr = paymentMethods
-      .substring(1, paymentMethods.length - 1)
+      // .substring(1, paymentMethods.length - 1)
       .split(',');
     req.body.paymentMethods = paymentMethodArr;
+    console.log('paymentMethodArr ', paymentMethodArr);
   }
 
   // -> Add / Update Doctor job
@@ -107,25 +108,12 @@ const updateCurrentUser = async (req, res, next) => {
 
   // -> Set / Update Problems that doctor treat
   if (problemsItSolves) {
-    console.log(req.user);
-    const problemsItSolvesArr = problemsItSolves
-      .substring(1, problemsItSolves.length - 1)
-      .split(',');
-    req.body.problemsItSolves = [
-      ...req.user.problemsItSolves,
-      ...problemsItSolvesArr,
-    ];
+    req.body.problemsItSolves = JSON.parse(problemsItSolves);
   }
 
   // -> Set / Update Problems that doctor treat
   if (directionsOfWork) {
-    const directionsOfWorkArr = directionsOfWork
-      .substring(1, directionsOfWork.length - 1)
-      .split(',');
-    req.body.directionsOfWork = [
-      ...req.user.directionsOfWork,
-      ...directionsOfWorkArr,
-    ];
+    req.body.directionsOfWork = JSON.parse(directionsOfWork);
   }
 
   // -> Check if new phone number already exist
@@ -142,8 +130,6 @@ const updateCurrentUser = async (req, res, next) => {
       new: true,
     }
   );
-
-  console.log('req.body', req.body);
 
   console.log('updatedUser', updatedUser);
 

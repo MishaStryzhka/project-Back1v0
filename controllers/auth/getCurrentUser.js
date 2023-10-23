@@ -27,6 +27,7 @@ const getCurrentUser = async (req, res, next) => {
     certificates,
     experienceYears,
     links,
+    paymentMethods,
   } = user;
 
   res.status(200).json({
@@ -49,6 +50,7 @@ const getCurrentUser = async (req, res, next) => {
       certificates,
       experienceYears,
       links,
+      paymentMethods,
     },
   });
 };
