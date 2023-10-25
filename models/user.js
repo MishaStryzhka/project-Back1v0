@@ -174,6 +174,16 @@ const userSchema = new Schema(
     token: {
       type: String,
     },
+    communicationWithDoctor: {
+      type: [String],
+      enum: ['telegramBot', 'chatBotOnTheSite'],
+      required: true,
+    },
+    howApplicationsAreReceived: {
+      type: [String],
+      enum: ['telegramBot', 'chatBotOnTheSite', 'email'],
+      required: true,
+    },
   },
   { versionKey: false, timestamps: true }
 );

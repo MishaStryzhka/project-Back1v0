@@ -13,6 +13,8 @@ const updateCurrentUser = async (req, res, next) => {
     directionsOfWork,
     contactMethods,
     links,
+    communicationWithDoctor,
+    howApplicationsAreReceived,
   } = req.body;
 
   console.log('req.body', req.body);
@@ -45,6 +47,18 @@ const updateCurrentUser = async (req, res, next) => {
     req.body.phones = phonesArr;
   }
 
+  // -> Check if new communicationWithDoctor already exist
+  if (communicationWithDoctor) {
+    const communicationWithDoctorArr = communicationWithDoctor.split(',');
+    req.body.communicationWithDoctor = communicationWithDoctorArr;
+  }
+
+  // -> Check if new communicationWithDoctor already exist
+  if (howApplicationsAreReceived) {
+    const howApplicationsAreReceivedArr = howApplicationsAreReceived.split(',');
+    req.body.howApplicationsAreReceived = howApplicationsAreReceivedArr;
+  }
+
   if (email) {
     throw HttpError(404, 'Not found');
   }
@@ -67,11 +81,8 @@ const updateCurrentUser = async (req, res, next) => {
 
   // -> Add / Update payment method
   if (paymentMethods) {
-    const paymentMethodArr = paymentMethods
-      // .substring(1, paymentMethods.length - 1)
-      .split(',');
+    const paymentMethodArr = paymentMethods.split(',');
     req.body.paymentMethods = paymentMethodArr;
-    console.log('paymentMethodArr ', paymentMethodArr);
   }
 
   // -> Add / Update Doctor job
@@ -153,6 +164,8 @@ const updateCurrentUser = async (req, res, next) => {
       contactMethods: updatedUser.contactMethods,
       dateOfBirthday: updatedUser.dateOfBirthday,
       links: updatedUser.links,
+      communicationWithDoctor: updatedUser.communicationWithDoctor,
+      howApplicationsAreReceived: updatedUser.howApplicationsAreReceived,
     },
   });
 };
