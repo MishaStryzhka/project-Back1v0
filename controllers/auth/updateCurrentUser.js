@@ -166,6 +166,9 @@ const updateCurrentUser = async (req, res, next) => {
       links: updatedUser.links,
       communicationWithDoctor: updatedUser.communicationWithDoctor,
       howApplicationsAreReceived: updatedUser.howApplicationsAreReceived,
+      isPublish: updatedUser.isPublish,
+      receiveNotificationsAboutNewMessagesOnTheEmail:
+        updatedUser.receiveNotificationsAboutNewMessagesOnTheEmail,
     },
   });
 };
