@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose');
 const validator = require('validator');
 const { handleMongooseError } = require('../helpers');
+const { boolean } = require('joi');
 
 // eslint-disable-next-line no-useless-escape
 const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -95,7 +96,6 @@ const userSchema = new Schema(
           auto: false, // Вимкніть автоматичне створення _id
         },
       }),
-      required: true,
     },
 
     // -> Fields for DOCTOR
@@ -184,6 +184,11 @@ const userSchema = new Schema(
       enum: ['telegramBot', 'chatBotOnTheSite', 'email'],
       required: true,
     },
+    isPublish: {
+      type: Boolean,
+      default: false, // Set the default value to true if needed
+    },
+    receiveNotificationsAboutNewMessagesOnTheEmail: { type: Boolean },
   },
   { versionKey: false, timestamps: true }
 );

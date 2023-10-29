@@ -30,6 +30,8 @@ const getCurrentUser = async (req, res, next) => {
     paymentMethods,
     communicationWithDoctor,
     howApplicationsAreReceived,
+    isPublish,
+    receiveNotificationsAboutNewMessagesOnTheEmail,
   } = user;
 
   res.status(200).json({
@@ -55,6 +57,8 @@ const getCurrentUser = async (req, res, next) => {
       paymentMethods,
       communicationWithDoctor,
       howApplicationsAreReceived,
+      isPublish,
+      receiveNotificationsAboutNewMessagesOnTheEmail,
     },
   });
 };
