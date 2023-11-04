@@ -120,7 +120,7 @@ const userSchema = new Schema(
       },
     },
 
-    experienceYears: { type: String, lowercase: true, trim: true },
+    experienceYears: { type: Number, lowercase: true, trim: true },
 
     educations: [
       {

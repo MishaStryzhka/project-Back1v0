@@ -14,6 +14,8 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
 const authRouter = require('./routes/api/auth');
+const doctorsRouter = require('./routes/api/doctors');
+
 const path = require('path');
 
 const app = express();
@@ -47,6 +49,7 @@ app.get('/', (req, res) => {
 // **********************************************************************
 
 app.use('/api/users', authRouter);
+app.use('/api/doctors', doctorsRouter);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
