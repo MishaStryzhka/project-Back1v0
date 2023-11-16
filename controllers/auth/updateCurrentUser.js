@@ -117,6 +117,17 @@ const updateCurrentUser = async (req, res, next) => {
     );
   }
 
+  // -> Set / Update User WorkExamples
+  if (req.files.workExamples) {
+    req.body.workExamples = [...req.user.workExamples];
+    req.files.workExamples.map(el =>
+      req.body.workExamples.push({
+        path: el.path,
+        workExamplePublicID: el.filename,
+      })
+    );
+  }
+
   // -> Set / Update Problems that doctor treat
   if (problemsItSolves) {
     req.body.problemsItSolves = JSON.parse(problemsItSolves);
@@ -159,6 +170,7 @@ const updateCurrentUser = async (req, res, next) => {
       paymentMethods: updatedUser.paymentMethods,
       jobs: updatedUser.jobs,
       certificates: updatedUser.certificates,
+      workExamples: updatedUser.workExamples,
       directionsOfWork: updatedUser.directionsOfWork,
       problemsItSolves: updatedUser.problemsItSolves,
       contactMethods: updatedUser.contactMethods,
