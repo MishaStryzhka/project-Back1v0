@@ -169,6 +169,12 @@ const userSchema = new Schema(
         certificatePublicID: { type: String, lowercase: true, trim: true },
       },
     ],
+    workExamples: [
+      {
+        path: { type: String, lowercase: true, trim: true },
+        workExamplePublicID: { type: String, lowercase: true, trim: true },
+      },
+    ],
 
     avatarPublicId: String,
     token: {

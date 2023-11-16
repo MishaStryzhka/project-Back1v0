@@ -24,6 +24,8 @@ const storage = new CloudinaryStorage({
       folder = 'DentistPortal_Avatars';
     } else if (file.fieldname === 'certificates') {
       folder = 'DentistPortal_Certificates';
+    } else if (file.fieldname === 'workExamples') {
+      folder = 'DentistPortal_WorkExamples';
     } else {
       folder = 'misc';
     }

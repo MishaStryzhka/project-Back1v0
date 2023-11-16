@@ -45,6 +45,7 @@ router.put(
   upload.fields([
     { name: 'avatar', maxCount: 1 },
     { name: 'certificates', maxCount: 50 },
+    { name: 'workExamples', maxCount: 50 },
   ]),
   ctrl.updateCurrentUser
 );
